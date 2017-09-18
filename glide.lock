@@ -1,0 +1,83 @@
+hash: 52c8bc42a3f785e1624c2ac81e43a67e4d5045870833f7a6c44452956c9c300b
+updated: 2017-09-15T16:19:59.279389566+01:00
+imports:
+- name: github.com/bugsnag/bugsnag-go
+  version: 5487005f569bc97bae79a32fcfbf33a3b98fbbee
+  subpackages:
+  - errors
+- name: github.com/bugsnag/panicwrap
+  version: aa7703c9414b36d4e9b2e42e6c704d0bfae7db64
+- name: github.com/facebookgo/stack
+  version: 751773369052141c013c6e827a71e8f35c07879c
+- name: github.com/golang/protobuf
+  version: 7a211bcf3bce0e3f1d74f9894916e6f116ae83b4
+  subpackages:
+  - proto
+  - ptypes/any
+- name: github.com/grpc-ecosystem/go-grpc-middleware
+  version: 645b33ed7ba8739747bf2df55d0349d4bba2e7f6
+  subpackages:
+  - tags
+- name: github.com/Gurpartap/logrus-stack
+  version: 89c00d8a28f43c567d92eb81a2945301a6a9fbb9
+- name: github.com/kardianos/osext
+  version: ae77be60afb1dcacde03767a8c37337fad28ac14
+- name: github.com/Shopify/logrus-bugsnag
+  version: 6dbc35f2c30d1e37549f9673dd07912452ab28a5
+- name: github.com/sirupsen/logrus
+  version: f006c2ac4710855cf0f916dd6b77acf6b048dc6e
+- name: golang.org/x/crypto
+  version: 7e9105388ebff089b3f99f0ef676ea55a6da3a7e
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/net
+  version: 7dcfb8076726a3fdd9353b6b8a1f1b6be6811bd6
+  subpackages:
+  - context
+  - context/ctxhttp
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - lex/httplex
+  - trace
+- name: golang.org/x/sys
+  version: a55a76086885b80f79961eacb876ebd8caf3868d
+  subpackages:
+  - unix
+- name: golang.org/x/text
+  version: 19e51611da83d6be54ddafce4a4af510cb3e9ea4
+  subpackages:
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
+- name: google.golang.org/api
+  version: 39c3dd417c5a443607650f18e829ad308da08dd2
+  subpackages:
+  - clouderrorreporting/v1beta1
+  - gensupport
+  - googleapi
+  - googleapi/internal/uritemplates
+  - logging/v2beta1
+- name: google.golang.org/genproto
+  version: d80a6e20e776b0b17a324d0ba1ab50a39c8e8944
+  subpackages:
+  - googleapis/rpc/status
+- name: google.golang.org/grpc
+  version: b15215fb911b24a5d61d57feec4233d610530464
+  subpackages:
+  - codes
+  - credentials
+  - grpclb/grpc_lb_v1
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - stats
+  - status
+  - tap
+  - transport
+testImports: []

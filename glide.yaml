@@ -1,0 +1,24 @@
+package: github.com/andela/epic-logger-go
+import:
+- package: github.com/Gurpartap/logrus-stack
+- package: github.com/Shopify/logrus-bugsnag
+- package: github.com/bugsnag/bugsnag-go
+  version: ~1.2.2
+- package: github.com/facebookgo/stack
+- package: github.com/grpc-ecosystem/go-grpc-middleware
+  subpackages:
+  - tags
+- package: github.com/sirupsen/logrus
+  version: ~1.0.3
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: google.golang.org/api
+  subpackages:
+  - clouderrorreporting/v1beta1
+  - logging/v2beta1
+- package: google.golang.org/grpc
+  version: ~1.4.0
+  subpackages:
+  - grpclog
+  - metadata
