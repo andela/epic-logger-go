@@ -9,12 +9,12 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-var entry = WithFields(map[string]interface{}{"service": "test-service", "version": "123"})
+var epicLogger = WithFields(map[string]interface{}{"service": "test-service", "version": "123"})
 
 func TestErrorNotLost(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("error", errors.New("wild walrus")))
+	b, err := formatter.Format(epicLogger.WithField("error", errors.New("wild walrus")).Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -32,7 +32,7 @@ func TestErrorNotLost(t *testing.T) {
 func TestErrorNotLostOnFieldNotNamedError(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("omg", errors.New("wild walrus")))
+	b, err := formatter.Format(epicLogger.WithField("omg", errors.New("wild walrus")).Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -58,7 +58,7 @@ func TestContextNotLost(t *testing.T) {
 			"author_name", "this_author_name",
 		),
 	)
-	b, err := formatter.Format(entry.WithField("ctx", ctx))
+	b, err := formatter.Format(epicLogger.WithCtx(ctx).Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -68,37 +68,6 @@ func TestContextNotLost(t *testing.T) {
 	if err != nil {
 		t.Fatal("Unable to unmarshal formatted entry: ", err)
 	}
-	if entry["userId"] != "this_author_id" {
-		t.Fatal("userId field not set")
-	}
-	context := entry["context"].(map[string]interface{})
-	if context["user"] != "this_author_name" {
-		t.Fatal("context.user field not set")
-	}
-}
-
-func TestErrorNotLostOnFieldNotNamedCtx(t *testing.T) {
-	formatter := &EpicFormatter{}
-
-	ctx := metadata.NewIncomingContext(
-		context.Background(),
-		metadata.Pairs(
-			"author_id", "this_author_id",
-			"author_name", "this_author_name",
-		),
-	)
-
-	b, err := formatter.Format(entry.WithField("omg", ctx))
-	if err != nil {
-		t.Fatal("Unable to format entry: ", err)
-	}
-
-	entry := make(map[string]interface{})
-	err = json.Unmarshal(b, &entry)
-	if err != nil {
-		t.Fatal("Unable to unmarshal formatted entry: ", err)
-	}
-
 	if entry["userId"] != "this_author_id" {
 		t.Fatal("userId field not set")
 	}
@@ -111,7 +80,7 @@ func TestErrorNotLostOnFieldNotNamedCtx(t *testing.T) {
 func TestFieldClashWithTime(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("time", "right now!"))
+	b, err := formatter.Format(epicLogger.WithField("time", "right now!").Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -134,7 +103,7 @@ func TestFieldClashWithTime(t *testing.T) {
 func TestFieldClashWithMessage(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("message", "something"))
+	b, err := formatter.Format(epicLogger.WithField("message", "something").Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -153,7 +122,7 @@ func TestFieldClashWithMessage(t *testing.T) {
 func TestFieldClashWithSeverity(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("severity", "something"))
+	b, err := formatter.Format(epicLogger.WithField("severity", "something").Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}
@@ -172,7 +141,7 @@ func TestFieldClashWithSeverity(t *testing.T) {
 func TestJSONEntryEndsWithNewline(t *testing.T) {
 	formatter := &EpicFormatter{}
 
-	b, err := formatter.Format(entry.WithField("level", "something"))
+	b, err := formatter.Format(epicLogger.WithField("level", "something").Entry)
 	if err != nil {
 		t.Fatal("Unable to format entry: ", err)
 	}

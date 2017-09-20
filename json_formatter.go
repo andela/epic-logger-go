@@ -72,8 +72,6 @@ func getSeverity(level log.Level) string {
 		return "CRITICAL"
 	case log.PanicLevel:
 		return "CRITICAL"
-	case log.WarnLevel:
-		return "WARNING"
 	default:
 		return strings.ToUpper(level.String())
 	}
@@ -159,7 +157,7 @@ func preparePayload(entry *log.Entry, data log.Fields, httpReq *logging.HttpRequ
 			log.Printf("error parsing error reporting data: %s", err.Error())
 		}
 		for k, v := range data {
-			if !contains(k, []string{"service", "version", "caller", "user"}) {
+			if !contains(k, []string{"service", "version", "caller", "user", "stack", "message"}) {
 				errorJSONPayload[k] = v
 			}
 		}
@@ -181,6 +179,11 @@ func buildErrorReportingEvent(entry *log.Entry, data log.Fields, httpReq *loggin
 		},
 		Context: &errorReporting.ErrorContext{},
 	}
+
+	if data["stack"] != nil {
+		errorEvent.Message += data["stack"].(stack.Stack).String()
+	}
+
 	if data["user"] != nil {
 		errorEvent.Context.User = data["user"].(string)
 	}
