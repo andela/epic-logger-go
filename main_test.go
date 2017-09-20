@@ -10,8 +10,8 @@ import (
 )
 
 func TestBasicError(t *testing.T) {
-	hook := test.NewLocal(std)
-	logrus.Error(errors.New("Helloerror"))
+	hook := test.NewLocal(baseLogger.Logger)
+	Error(errors.New("Helloerror"))
 	assert.Equal(t, 1, len(hook.Entries))
 	assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 	assert.Equal(t, "Helloerror", hook.LastEntry().Message)
@@ -21,8 +21,9 @@ func TestBasicError(t *testing.T) {
 }
 
 func TestBasicInfo(t *testing.T) {
-	hook := test.NewLocal(std)
-	logrus.Info("I am a simple info")
+	// logger := WithField("sse", []string{"adebayo", "thuita", "james"})
+	hook := test.NewLocal(baseLogger.Logger)
+	WithField("sse", []string{"adebayo", "thuita", "james"}).Info("I am a simple info")
 	assert.Equal(t, 1, len(hook.Entries))
 	assert.Equal(t, logrus.InfoLevel, hook.LastEntry().Level)
 	assert.Equal(t, "I am a simple info", hook.LastEntry().Message)
@@ -32,8 +33,8 @@ func TestBasicInfo(t *testing.T) {
 }
 
 func TestServiceHook(t *testing.T) {
-	hook := test.NewLocal(std)
-	Error("I am a simple error")
+	hook := test.NewLocal(baseLogger.Logger)
+	WithField("sse", map[string]string{"ais": "adebayo", "pulse": "thuita", "lv": "james"}).Error("I am a simple error")
 	assert.Equal(t, 1, len(hook.Entries))
 	assert.Equal(t, logrus.ErrorLevel, hook.LastEntry().Level)
 	assert.Equal(t, "I am a simple error", hook.LastEntry().Message)
@@ -45,5 +46,5 @@ func TestServiceHook(t *testing.T) {
 }
 
 func TestServiceHooks(t *testing.T) {
-	Info("I am a simple error")
+	WithField("name", "ikem").Info("I am a simple error")
 }
