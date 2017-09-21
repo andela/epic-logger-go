@@ -135,16 +135,16 @@ func (f *TextFormatter) printColored(b *bytes.Buffer, entry *log.Entry, keys []s
 	var levelColor int
 	switch entry.Level {
 	case log.DebugLevel:
-		levelColor = gray
+		levelColor = blue
 	case log.WarnLevel:
 		levelColor = yellow
 	case log.ErrorLevel, log.FatalLevel, log.PanicLevel:
 		levelColor = red
 	default:
-		levelColor = blue
+		levelColor = green
 	}
 
-	levelText := strings.ToUpper(entry.Level.String())[0:4]
+	levelText := strings.ToUpper(entry.Level.String())
 
 	if f.DisableTimestamp {
 		fmt.Fprintf(b, "\x1b[%dm%s\x1b[0m %-44s ", levelColor, levelText, entry.Message)
