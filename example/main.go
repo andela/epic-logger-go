@@ -1,10 +1,10 @@
 package main
 
-import "github.com/andela/epic-logger-go"
+import log "github.com/andela/epic-logger-go"
 
 func main() {
-	epiclogger.Info("I am an info")
-	epiclogger.Error("I am an error")
-	epiclogger.Debug("I am done")
-	epiclogger.Fatal("I am fatal")
+	log.Info("I am an info")
+	log.Error("I am an error")
+	log.Debug("I am done")
+	log.Fatal("I am fatal")
 }
