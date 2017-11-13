@@ -63,6 +63,9 @@ func (e *EpicLogger) WithFields(fields log.Fields) *EpicLogger {
 
 func (e *EpicLogger) addServiceContext() *EpicLogger {
 	podName := os.Getenv("POD_NAME")
+	if podName == "" {
+		podName = "default-service-1234-abcs"
+	}
 	serviceNVersion := strings.Split(podName, "-")
 	length := len(serviceNVersion)
 	if podName != "" {
