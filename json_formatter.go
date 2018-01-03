@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/facebookgo/stack"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	errorReporting "google.golang.org/api/clouderrorreporting/v1beta1"
