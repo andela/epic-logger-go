@@ -3,6 +3,7 @@ package epiclogger
 import (
 	"os"
 
+	logrus_stack "github.com/andela/logrus-stack"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/grpclog"
 )
