@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/facebookgo/stack"
-	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	log "github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	errorReporting "google.golang.org/api/clouderrorreporting/v1beta1"
@@ -171,15 +170,17 @@ func preparePayload(entry *log.Entry, data log.Fields, httpReq *logging.HttpRequ
 
 func buildErrorReportingEvent(entry *log.Entry, data log.Fields, httpReq *logging.HttpRequest) errorReporting.ReportedErrorEvent {
 	errorEvent := errorReporting.ReportedErrorEvent{
-		EventTime: entry.Time.Format(time.RFC3339),
-		Message:   entry.Message,
-		ServiceContext: &errorReporting.ServiceContext{
-			Service: data["service"].(string),
-			Version: data["version"].(string),
-		},
-		Context: &errorReporting.ErrorContext{},
+		EventTime:      entry.Time.Format(time.RFC3339),
+		Message:        entry.Message,
+		ServiceContext: &errorReporting.ServiceContext{},
+		Context:        &errorReporting.ErrorContext{},
 	}
-
+	if data["service"] != nil {
+		errorEvent.ServiceContext.Service = data["service"].(string)
+	}
+	if data["version"] != nil {
+		errorEvent.ServiceContext.Version = data["version"].(string)
+	}
 	if data["stack"] != nil {
 		errorEvent.Message += data["stack"].(stack.Stack).String()
 	}
