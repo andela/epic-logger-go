@@ -3,9 +3,6 @@ package epiclogger
 import (
 	"os"
 
-	"github.com/Shopify/logrus-bugsnag"
-	"github.com/andela/logrus-stack"
-	bugsnag "github.com/bugsnag/bugsnag-go"
 	log "github.com/sirupsen/logrus"
 	"google.golang.org/grpc/grpclog"
 )
@@ -30,14 +27,14 @@ func init() {
 		SetLevel(log.DebugLevel)
 	}
 	AddHook(logrus_stack.StandardHook())
-	if Environment == "production" {
-		bugsnag.Configure(bugsnag.Configuration{
-			APIKey: os.Getenv("BUGSNAG_API_KEY"),
-		})
-		hook, err := logrus_bugsnag.NewBugsnagHook()
-		if err != nil {
-			AddHook(hook)
-		}
-	}
+	// if Environment == "production" {
+	// 	bugsnag.Configure(bugsnag.Configuration{
+	// 		APIKey: os.Getenv("BUGSNAG_API_KEY"),
+	// 	})
+	// 	hook, err := logrus_bugsnag.NewBugsnagHook()
+	// 	if err != nil {
+	// 		AddHook(hook)
+	// 	}
+	// }
 	replaceGrpcLogger()
 }
